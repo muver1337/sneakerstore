@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('brand_id');
             $table->string('model');
-            $table->integer('cost');
+            $table->string('size');
+            $table->string('cost');
             $table->timestamps();
         });
     }
