@@ -8,14 +8,14 @@ use App\Http\Resources\SneakerResource;
 use App\Models\Sneaker;
 use Illuminate\Http\Response;
 
-class SneakerController extends Controller
+class AdminSneakerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return SneakerResource::collection(Sneaker::all());
+        //
 
     }
 
@@ -28,6 +28,7 @@ class SneakerController extends Controller
 
         return new SneakerResource($add_sneaker);
     }
+
     /**
      * Display the specified resource.
      */
@@ -42,7 +43,9 @@ class SneakerController extends Controller
      */
     public function update(SneakerStoreRequest $request, Sneaker $sneaker)
     {
-        //
+        $sneaker->update($request->validated());
+
+        return new SneakerResource($sneaker);
     }
 
     /**
@@ -50,6 +53,8 @@ class SneakerController extends Controller
      */
     public function destroy(Sneaker $sneaker)
     {
-        //
+        $sneaker->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

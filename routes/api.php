@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AdminSneakerController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\SneakerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,13 +17,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::group(['namespace' => 'App\Http\Controllers\Api', 'middleware' => ['auth:sanctum']], function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::apiResources(['cart' => \App\Http\Controllers\Api\CartController::class]);
 });
 
-Route::apiResources([
-    'sneaker' => SneakerController::class
-]);
+Route::group(['namespace' => 'App\Http\Controllers\Api'], function () {
+    Route::post('register', [AuthController::class, 'registration']);
+    Route::post('login', [AuthController::class, 'authorization']);
+});
 
+Route::apiResources(['sneaker' => SneakerController::class]);
 
+Route::group(['namespace' => 'App\Http\Controllers\Api', 'middleware' => ['auth:sanctum', 'admin']], function () {
+});
 
