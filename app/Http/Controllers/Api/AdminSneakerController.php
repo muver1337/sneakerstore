@@ -51,10 +51,15 @@ class AdminSneakerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sneaker $sneaker)
-    {
+    public function destroy($id) {
+        $sneaker = Sneaker::find($id);
+
+        if (!$sneaker) {
+            return response()->json(['message' => 'Sneaker not found'], 404);
+        }
+
         $sneaker->delete();
 
-        return response(null, Response::HTTP_NO_CONTENT);
+        return response()->json(['message' => 'Sneaker deleted successfully']);
     }
 }

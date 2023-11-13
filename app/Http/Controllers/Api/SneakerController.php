@@ -24,17 +24,16 @@ class SneakerController extends Controller
      */
     public function store(SneakerStoreRequest $request)
     {
-        $add_sneaker = Sneaker::create($request->validated());
-
-        return new SneakerResource($add_sneaker);
+//        $add_sneaker = Sneaker::create($request->validated());
+//
+//        return new SneakerResource($add_sneaker);
     }
     /**
      * Display the specified resource.
      */
-    public function show(Sneaker $sneaker)
-    {
-        return new SneakerResource($sneaker);
-
+    public function show($id) {
+        $sneaker = Sneaker::find($id);
+        return response()->json($sneaker);
     }
 
     /**
@@ -52,4 +51,5 @@ class SneakerController extends Controller
     {
         //
     }
+
 }
