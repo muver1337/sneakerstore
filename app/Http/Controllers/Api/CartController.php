@@ -28,25 +28,15 @@ class CartController extends Controller
         return new CartResource($add_cart);
     }
 
+    public function destroyCart($id) {
+        $cart = Cart::find($id);
+
+        if (!$cart) {
+            return response()->json(['message' => 'Товар не найден'], 404);
+        }
+
+        $cart->delete();
+        return response()->json(['message' => 'Товар успешно удален']);
+    }
 }
-//    public function addCart(Request $request)
-//    {
-//        $sneaker = Sneaker::query()->where(['id' => $request->id])->first();
-//
-//        $sessionId = User::getId();
-//
-//        \Cart::session($sessionId)->add([
-//            'id' => $sneaker,
-//            'name' => $sneaker->name,
-//            'price' => $sneaker->price,
-//            'quantity' => 4,
-//            'attributes' => [
-//                'image' => $sneaker->image,
-//            ]
-//        ]);
-//
-//        $cart = \Cart::getContent();
-//
-//        return redirect()->back();
-//    }
 

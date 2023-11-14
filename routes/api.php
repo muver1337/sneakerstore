@@ -18,6 +18,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Api', 'middleware' => ['auth:
     Route::post('logout', [AuthController::class, 'logout']); // Выход
     Route::get('cart', [CartController::class, 'index']); // Список в корзине
     Route::post('addCart', [CartController::class, 'addInCart']); // Добавить в корзину
+    Route::delete('cart/{id}', [CartController::class, 'destroyCart']);
 });
 
 // Пути для не авторизированных
@@ -31,5 +32,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Api', 'middleware' => ['auth:
     Route::get('users', [UserController::class, 'users']); // Вывод всех пользователей
     Route::delete('sneaker/{id}', [AdminSneakerController::class, 'destroy']); // Удаление кроссовка по id
     Route::post('sneaker', [AdminSneakerController::class, 'store']); // Добавить кроссовок
+    Route::put('sneaker/{id}', [AdminSneakerController::class, 'update']);
 });
 

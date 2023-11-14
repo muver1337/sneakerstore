@@ -23,8 +23,8 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'login' => ['required', 'unique:users', 'alpha', 'regex:/^[a-zA-Z]{3,20}$/'],
-            'password' => ['required'],
+            'login' => ['required', 'unique:users', 'regex:/^[a-zA-Z0-9]{8,20}$/'],
+            'password' => ['required', 'regex:/^[a-zA-Z0-9]{8,20}$/'],
             'email' => 'required|email|unique:users',
         ];
 
