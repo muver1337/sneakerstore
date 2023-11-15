@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sneakers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id');
+            $table->foreignId('brand_id')->references('id')->on('brands');;
             $table->string('model');
             $table->string('size');
             $table->string('cost');

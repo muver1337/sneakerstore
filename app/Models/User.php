@@ -44,4 +44,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function sneaker()
+    {
+        return $this->belongsToMany(
+            Sneaker::class,
+            'cart',
+            'user_id',
+            'sneaker_id')
+            ->using(Cart::class);
+    }
 }

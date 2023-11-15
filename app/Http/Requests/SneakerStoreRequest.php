@@ -18,6 +18,7 @@ class SneakerStoreRequest extends FormRequest
         return [
             'brand_id' => 'required',
             'model' => 'required|max:255',
+            'size' => 'required',
             'cost'=>'required',
         ];
     }

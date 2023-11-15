@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdminCartController;
 use App\Http\Controllers\Api\AdminSneakerController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
@@ -17,7 +18,7 @@ Route::get('sneaker/{id}', [SneakerController::class, 'show']); // Страни�
 Route::group(['namespace' => 'App\Http\Controllers\Api', 'middleware' => ['auth:sanctum']], function () {
     Route::post('logout', [AuthController::class, 'logout']); // Выход
     Route::get('cart', [CartController::class, 'index']); // Список в корзине
-    Route::get('sneaker/{id}/', [CartController::class, 'addInCart']); // Добавить в корзину
+    Route::get('sneaker/{id}/add', [CartController::class, 'addInCart']); // Добавить в корзину
     Route::delete('cart/{id}', [CartController::class, 'destroyCart']);
 //    Route::post('sneaker/{id}/', [SneakerController::class, 'addinCart']);
 });

@@ -18,9 +18,15 @@ use function Psy\debug;
 
 class CartController extends Controller
 {
+//    public function index()
+//    {
+//        return CartResource::collection(Cart::all());
+//
+//    }
+
     public function index()
     {
-        return CartResource::collection(Cart::all());
+        return CartResource::collection(Auth::user()->sneaker);
 
     }
 
@@ -42,17 +48,14 @@ class CartController extends Controller
         return response()->json(['message' => 'Товар успешно удален']);
     }
 
-    public function addInCart(Sneaker $sneaker)
+    public function addInCart(Sneaker $id)
     {
         // Получение id авторизованного пользователя
         $user_Id = Auth::id();
-        Log::debug(Auth::id());
         // Добавление товара в корзину
         Cart::create([
             'user_id' => $user_Id,
-            'sneaker_id' => $sneakerId,
-            'size' => $size,
-            'cost' => $cost,
+            'sneaker_id' => $id->id,
         ]);
 
         return response()->json(['message' => 'Товар успешно добавлен в корзину']);

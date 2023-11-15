@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('sneaker_id');
-            $table->float('size');
-            $table->integer('cost');
-            $table->timestamps();
+        Schema::create('cart', function (Blueprint $table) {
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('sneaker_id')->references('id')->on('sneakers');
         });
     }
 
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('cart');
     }
 };
