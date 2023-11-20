@@ -10,21 +10,13 @@ class CartResource extends JsonResource
 {
 
     public function toArray(Request $request): array
-
     {
         return [
             'user_id' => $request->user()->id,
-            'topics_amount' => count($request->user()->sneaker),
-            'topics' => [
+            'items_amount' => count($request->user()->sneaker),
+            'sneakers' => [
                 SneakerResource::collection($request->user()->sneaker)
             ]
         ];
-//        return [
-//            'id' => $this->id,
-//            'user_id' => $this->user_id,
-//            'sneaker_id' => $this->sneaker_id,
-//            'size' => $this->size,
-//            'cost' => $this->cost,
-//        ];
     }
 }

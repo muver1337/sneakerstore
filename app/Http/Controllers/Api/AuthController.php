@@ -31,8 +31,6 @@ class AuthController extends Controller
     {
         $user = User::where('login', $request->login)->first();
         if ($user && Hash::check($request->password, $user->password)) {
-
-
             $user->tokens()->delete();
 
             $token = null;

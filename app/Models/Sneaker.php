@@ -9,5 +9,6 @@ class Sneaker extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['brand_id', 'model', 'cost'];
+    public $timestamps = false;
+    protected $guarded = [];
 }

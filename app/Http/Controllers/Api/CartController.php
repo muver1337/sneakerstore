@@ -3,62 +3,44 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CartRequest;
-use App\Http\Requests\SneakerStoreRequest;
 use App\Http\Resources\CartResource;
-use App\Http\Resources\SneakerResource;
 use App\Models\Cart;
 use App\Models\Sneaker;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use MongoDB\Driver\Session;
-use function Psy\debug;
 
 class CartController extends Controller
 {
-//    public function index()
-//    {
-//        return CartResource::collection(Cart::all());
-//
-//    }
-
-    public function index()
+    // Просмотр от лица пользователя своей корзины
+    public function index(): CartResource
     {
-        return CartResource::collection(Auth::user()->sneaker);
-
+        return new CartResource(Auth::user()->sneaker);
     }
 
-//    public function addInCart(CartRequest $request)
-//    {
-//        $add_cart = Cart::create($request->validated());
-//
-//        return new CartResource($add_cart);
-//    }
-
-    public function destroyCart($id) {
-        $cart = Cart::find($id);
-
-        if (!$cart) {
-            return response()->json(['message' => 'Товар не найден'], 404);
-        }
-
-        $cart->delete();
+    // Удаление товара из корзины
+    public function destroyCart(Sneaker $sneaker): \Illuminate\Http\JsonResponse
+    {
+        Cart::where('sneaker_id', $sneaker->id)->delete();
         return response()->json(['message' => 'Товар успешно удален']);
     }
 
-    public function addInCart(Sneaker $id)
+    // Добавление товара в корзину
+    public function addInCart(Sneaker $sneaker): CartResource
     {
-        // Получение id авторизованного пользователя
-        $user_Id = Auth::id();
-        // Добавление товара в корзину
-        Cart::create([
-            'user_id' => $user_Id,
-            'sneaker_id' => $id->id,
-        ]);
+        return new CartResource(Cart::create([
+            'user_id' => Auth::id(),
+            'sneaker_id' => $sneaker->id,
+        ]));
+    }
 
+    /*
+    public function addInCart(Sneaker $sneaker)
+    {
+        Cart::create([
+            'user_id' => Auth::id(),
+            'sneaker_id' => $sneaker->id,
+        ])
         return response()->json(['message' => 'Товар успешно добавлен в корзину']);
     }
+    */
 }
 

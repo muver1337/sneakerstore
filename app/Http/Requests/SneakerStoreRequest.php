@@ -9,18 +9,16 @@ class SneakerStoreRequest extends FormRequest
     public function authorize(): bool
     {
         $user = $this->user();
-
         return $user !== null && $user->tokenCan('create');
     }
 
     public function rules(): array
     {
         return [
+            'size' => 'required',
             'brand_id' => 'required',
             'model' => 'required|max:255',
-            'size' => 'required',
-            'cost'=>'required',
+            'cost'=> 'required'
         ];
     }
 }
-

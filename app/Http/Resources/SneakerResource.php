@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SneakerResource extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
         return [
@@ -15,6 +14,7 @@ class SneakerResource extends JsonResource
             'brand_id' => $this->brand_id,
             'model' => $this->model,
             'cost' => $this->cost,
+            'size' => $this->size
         ];
     }
 }

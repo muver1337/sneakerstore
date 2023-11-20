@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('model');
             $table->string('size');
             $table->string('cost');
-            $table->timestamps();
         });
     }
 

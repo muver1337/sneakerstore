@@ -7,15 +7,13 @@ use App\Http\Requests\SneakerStoreRequest;
 use App\Http\Resources\SneakerResource;
 use App\Models\Sneaker;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class AdminSneakerController extends Controller
 {
-    public function store(SneakerStoreRequest $request)
+    public function store(SneakerStoreRequest $request): SneakerResource
     {
-        $add_sneaker = Sneaker::create($request->validated());
-
-        return new SneakerResource($add_sneaker);
+        return new SneakerResource(Sneaker::create($request->validated()));
     }
 
     public function update(Request $request, $id)
@@ -27,15 +25,14 @@ class AdminSneakerController extends Controller
         return response()->json(['message' => 'Обновление прошло успешно', 'data' => $sneaker]);
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $sneaker = Sneaker::find($id);
 
         if (!$sneaker) {
-            return response()->json(['message' => 'Не найдего'], 404);
+            return response()->json(['message' => 'Не найдено'], 404);
         }
-
         $sneaker->delete();
-
         return response()->json(['message' => 'Успешно удалено']);
     }
 }
